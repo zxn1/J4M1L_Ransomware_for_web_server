@@ -1,0 +1,13 @@
+1. Create a new Laravel application or use an existing one.
+2. Define your API routes in the api.php file in the routes folder.
+3. Define your API controllers and their methods.
+4. Install the darkaonline/swagger-lume package using Composer to add support for Swagger 
+   annotations in Laravel.
+5. Annotate your API routes and controllers with Swagger annotations to define the metadata 
+   needed for Swagger documentation.
+6. Use the php artisan swagger-lume:generate command to generate the Swagger documentation 
+   in either JSON or YAML format.
+7. Use a Swagger UI tool, such as Swagger UI or Redoc, to display the generated 
+   documentation in a user-friendly format.
+
+There are many tutorials and resources available online that can guide you through this process in more detail. Additionally, the darkaonline/swagger-lume package documentation provides detailed instructions on how to use Swagger annotations in Laravel.
