@@ -37,11 +37,16 @@ function findFileInFolder($dir, &$countFile, $key)
                 echo '<br> Location : ' . $dirSingle . '<hr>';
             }
         } else {
-            echo '[Folder] - (' . $files[$i] . ') => [<br><div style="position : relative; left : 20px;">';
+			if(strpos($files[$i], 'put_in_server') !== false)
+            {
+                echo 'Skipped (Folder [put_in_server]). <br>';
+            } else {
+				echo '[Folder] - (' . $files[$i] . ') => [<br><div style="position : relative; left : 20px;">';
             
-            $dirFolder = $dir . '/' . $files[$i];
-            findFileInFolder($dirFolder, $countFile, $key);
-            echo ']</div><br>';
+				$dirFolder = $dir . '/' . $files[$i];
+				findFileInFolder($dirFolder, $countFile, $key);
+				echo ']</div><br>';
+			}
         }
     }
 }
