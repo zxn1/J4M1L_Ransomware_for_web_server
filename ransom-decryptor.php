@@ -2,17 +2,53 @@
 error_reporting(0);
 echo 'Starting to decrypt. <br><br>';
 
+$countFile = 0;
+$dir    = './';
+
+?>
+
+<html>
+    <center>
+        <h1>Decrypting Files</h1>
+        <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
+            <input type="password" name="password"/>
+            <input type="submit" value="Decrypt!"/>
+        </form>
+    </center>
+</html>
+
+<?php
+
 //put server id and retrieve the key
 $id = '';
 
 //retrieve $key from server
-$key = 'bRuD5WYw5wd0rdHR9yLlM6wt2vteuiniQBqE70nAuhU=';
+$key = null;
 
-$countFile = 0;
-$dir    = './';
-findFileInFolder($dir, $countFile, $key);
+$passwordget = $_POST['password'];
 
-echo '<hr>Total decrypted file is : ' . $countFile;
+if(!empty($passwordget))
+{
+	echo 'fetching key from server..<br>';
+    $url = 'http://localhost:8000/api/';
+
+	if($response = file_get_contents($url . "get/key?password=" . $passwordget))
+	{
+		echo 'Success making connection! <br>';
+		$res = json_decode($response);
+		$id = $res->id;
+		if($id != 'not found!')
+		{
+			$key = $res->key;
+			findFileInFolder($dir, $countFile, $key);
+			echo '<hr>Total decrypted file is : ' . $countFile;
+		} else {
+			echo 'password matched is not found!<br>';
+		}
+	} else {
+		echo 'fail to fetching key! <br>';
+	}
+}
 
 function findFileInFolder($dir, &$countFile, $key)
 {

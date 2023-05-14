@@ -90,9 +90,9 @@ class HomeController extends Controller
 
     public function getKeyByPass(Request $req)
     {
-        $key = keyAndPass::where('password', $req->password)->first();
+        $key = keyAndPass::where('password', $req->password);
 
-        if(empty($key))
+        if(!($key->exists()))
         {
             return response(
                 [
@@ -100,6 +100,7 @@ class HomeController extends Controller
                 ], 404
                 );
         } else {
+            $key = $key->first();
             return response(
                 [
                     'id' => $key->id,
