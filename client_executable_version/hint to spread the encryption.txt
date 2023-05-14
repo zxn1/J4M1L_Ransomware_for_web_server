@@ -1,0 +1,25 @@
+this is for looping in batch file:
+@echo off
+setlocal
+
+REM Loop from 1 to 10
+for /l %%i in (1,1,10) do (
+    echo %%i
+)
+
+endlocal
+
+
+
+
+this is to copy and paste:
+@echo off
+setlocal
+
+REM Get the path to the user's desktop
+set "desktop=%userprofile%\Desktop"
+
+REM Copy the file to the desktop
+copy "path\to\myfile.txt" "%desktop%"
+
+endlocal
