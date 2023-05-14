@@ -11,7 +11,7 @@ $dir    = './';
     <center>
         <h1>Decrypting Files</h1>
         <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
-            <input type="password" name="password"/>
+            <input type="password" placeholder="enter the password" name="password"/>
             <input type="submit" value="Decrypt!"/>
         </form>
     </center>
@@ -30,9 +30,20 @@ $passwordget = $_POST['password'];
 if(!empty($passwordget))
 {
 	echo 'fetching key from server..<br>';
-    $url = 'http://localhost:8000/api/';
+    $url = 'http://localhost:8000/';
+	$url = $url . "api/get/key?password=" . $passwordget;
+	
+	
+	$ch = curl_init();
+	curl_setopt($ch, CURLOPT_URL, $url . $passwordget);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	$response = curl_exec($ch);
+	if(curl_errno($ch)) {
+		echo 'Error fetching data: ' . curl_error($ch);
+	}
+	curl_close($ch);
 
-	if($response = file_get_contents($url . "get/key?password=" . $passwordget))
+	if(!empty($response))
 	{
 		echo 'Success making connection! <br>';
 		$res = json_decode($response);
